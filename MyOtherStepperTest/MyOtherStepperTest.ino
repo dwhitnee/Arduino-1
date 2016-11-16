@@ -32,16 +32,26 @@ void setup() {
   //AFMS.begin(1000);  // OR with a different frequency, say 1KHz
   
   myMotor->setSpeed(10);  // 10 rpm  
-
-  pinMode(xPin, OUTPUT);
 }
 
 void loop() {
-  Serial.println("Single coil steps");
-  myMotor->step(100, FORWARD, SINGLE); 
-  myMotor->step(100, BACKWARD, SINGLE); 
+  int x = analogRead(xPin); 
+  int y = analogRead(yPin);   
+  Serial.print(x);
+  Serial.print(" ");
+  Serial.println(y);
 
-  Serial.println("Double coil steps");
+  if (x > 800) {
+    Serial.println("Single coil steps");
+    myMotor->step(100, FORWARD, SINGLE); 
+     
+  }
+  if (x < 300) {
+    myMotor->step(100, BACKWARD, SINGLE);
+  }
+  
+
+  /*Serial.println("Double coil steps");
   myMotor->step(100, FORWARD, DOUBLE); 
   myMotor->step(100, BACKWARD, DOUBLE);
   
@@ -51,5 +61,5 @@ void loop() {
   
   Serial.println("Microstep steps");
   myMotor->step(50, FORWARD, MICROSTEP); 
-  myMotor->step(50, BACKWARD, MICROSTEP);
+  myMotor->step(50, BACKWARD, MICROSTEP);*/
 }
